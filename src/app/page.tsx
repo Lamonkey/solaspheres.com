@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const psychiatristFeatures = [
   {
@@ -78,9 +79,13 @@ export default function Home() {
         <section className="relative overflow-hidden rounded-[32px] border border-[#FFFCCF]/10 bg-gradient-to-br from-[#03142A] via-[#071F41] to-[#03142A] p-8 sm:p-12">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#FFFCCF]/40 bg-[#FFFCCF]/5 text-xs font-semibold tracking-widest text-[#FFFCCF]/70">
-                LOGO
-              </div>
+              <Image
+                src="/sola-icon.png"
+                alt="SolaChat Logo"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-2xl object-contain"
+              />
               <span className="text-xl font-semibold tracking-wide">SolaChat</span>
             </div>
             <div className="flex flex-wrap gap-3 text-sm text-[#FFFCCF]/70">
