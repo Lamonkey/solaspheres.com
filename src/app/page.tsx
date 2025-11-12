@@ -173,7 +173,7 @@ export default function Home() {
         <section className="flex flex-col gap-8">
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-[#041B36]/80 p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">心理治疗服务</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">提供在线心理医生心理治疗服务</h2>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">专业心理医生提供在线服务</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
               灵悟咨询 使用自有系统为患者提供在线心理治疗服务。通过我们的平台，患者可以与专业心理医生进行远程咨询，享受便捷、高效的心理治疗服务。
             </p>
@@ -211,19 +211,66 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-r from-[#041B36] to-[#03142A] p-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">值得信赖的伙伴</p>
-          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与医生、合规专家和真实患者共同打造</h2>
-          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-[#FFFCCF]/80">
-            无论是精品私营诊所还是多地点机构，灵悟心愈 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配您的工作流。
+        <section className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-r from-[#041B36] to-[#03142A] p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70 text-center">合作伙伴</p>
+          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF] text-center">值得信赖的机构选择我们</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-[#FFFCCF]/80 text-center">
+            我们为各类机构提供专业的系统服务，帮助他们更高效地管理患者和提供心理治疗服务。
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs uppercase tracking-[0.3em] text-[#FFFCCF]/60">
-            <span>HIPAA + SOC 2 Type II</span>
-            <span>原生电子处方日志</span>
-            <span>端到端加密消息</span>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-2xl border border-[#FFFCCF]/10 bg-[#03142A]/60 p-6 text-center">
+              <div className="text-4xl mb-3">🏥</div>
+              <h3 className="text-xl font-semibold text-[#FFFCCF]">医院</h3>
+              <p className="mt-2 text-sm text-[#FFFCCF]/70">[医院名称占位符]</p>
+            </div>
+            <div className="rounded-2xl border border-[#FFFCCF]/10 bg-[#03142A]/60 p-6 text-center">
+              <div className="text-4xl mb-3">🏫</div>
+              <h3 className="text-xl font-semibold text-[#FFFCCF]">学校</h3>
+              <p className="mt-2 text-sm text-[#FFFCCF]/70">[学校名称占位符]</p>
+            </div>
+            <div className="rounded-2xl border border-[#FFFCCF]/10 bg-[#03142A]/60 p-6 text-center sm:col-span-2 lg:col-span-1">
+              <div className="text-4xl mb-3">🏛️</div>
+              <h3 className="text-xl font-semibold text-[#FFFCCF]">政府机构</h3>
+              <p className="mt-2 text-sm text-[#FFFCCF]/70">[政府机构名称占位符]</p>
+            </div>
           </div>
         </section>
       </main>
+
+      <footer className="relative border-t border-[#FFFCCF]/10 bg-[#03142A] px-6 py-12 sm:px-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <h3 className="text-lg font-semibold text-[#FFFCCF]">联系方式</h3>
+              <div className="mt-4 space-y-2 text-sm text-[#FFFCCF]/80">
+                <p>
+                  <span className="font-medium">邮箱：</span>
+                  <Link href="mailto:help@sola.xin" className="underline-offset-4 hover:underline">
+                    help@sola.xin
+                  </Link>
+                </p>
+                <p>
+                  <span className="font-medium">地址：</span>
+                  <span className="text-[#FFFCCF]/60">[地址占位符]</span>
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#FFFCCF]">法律信息</h3>
+              <div className="mt-4 space-y-2 text-sm text-[#FFFCCF]/80">
+                <p>
+                  <Link href="/privacy" className="underline-offset-4 hover:underline">
+                    隐私声明
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-[#FFFCCF]/10 pt-8 text-center text-sm text-[#FFFCCF]/60">
+            <p>© {new Date().getFullYear()} 灵悟心愈. 保留所有权利。</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
