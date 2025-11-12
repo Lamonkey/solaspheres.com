@@ -5,19 +5,19 @@ const psychiatristFeatures = [
   {
     title: "委托信息收集",
     description:
-      "医生可以委托 AI 与患者对话，自动收集所需信息。例如，AI 可以与患者进行 CBT 方法进展更新对话，获取医生需要的问题答案，节省宝贵时间。",
+      "医生可委托 AI 与患者对话，自动收集所需信息。例如，AI 可与患者进行 CBT 进展更新对话，获取医生需要的问题答案，节省宝贵时间。",
     badge: "AI 助手",
   },
   {
     title: "智能患者报告",
     description:
-      "生成带有推理过程的患者报告，帮助医生快速识别需要帮助的患者，并主动采取行动。报告包含详细的分析和理由，让医生能够做出明智的临床决策。",
+      "生成包含推理过程的患者报告，帮助医生快速识别需要帮助的患者，并主动采取行动。报告包含详细的分析和理由，帮助医生做出明智的临床决策。",
     badge: "主动照护",
   },
   {
     title: "患者档案管理",
     description:
-      "强大的患者档案管理工具，提供实用功能帮助医生快速生成所需的各种报告。集中管理患者信息，轻松访问历史记录和生成定制化报告。",
+      "强大的患者档案管理工具，提供实用功能，帮助医生快速生成所需报告。集中管理患者信息，轻松访问历史记录，生成定制化报告。",
     badge: "档案管理",
   },
 ];
@@ -26,34 +26,34 @@ const patientHighlights = [
   {
     title: "亲民问诊",
     description:
-      "透明定价每次 300 元，让优质医疗支持触手可及。",
+      "每次问诊 300 元，价格透明，让优质医疗服务触手可及。",
   },
   {
     title: "随时在线的支持",
     description:
-      "在问诊之间与 AI 伴侣打卡睡眠、情绪与触发点，选择性同步给你的主治医生。",
+      "在问诊间隙，与 AI 助手记录睡眠、情绪和触发点，可选择性地同步给主治医生。",
   },
   {
     title: "自主预约",
     description:
-      "跨设备预约与改期，亦可申请续方。自动提醒减少爽约，让治疗计划稳定推进。",
+      "支持跨设备预约和改期，也可申请续方。自动提醒功能减少爽约，确保治疗计划顺利推进。",
   },
 ];
 
 const workflow = [
   {
     title: "连接诊所",
-    detail: "我们对接你的 EHR，导入团队模板，并配置合规防线。",
+    detail: "我们将对接您的 EHR 系统，导入团队模板，并配置合规设置。",
     duration: "Day 0",
   },
   {
     title: "训练副驾",
-    detail: "结合临床数据与内部规范，定制 SolaChat AI，让输出符合你的照护标准。",
+    detail: "结合临床数据和内部规范，定制 SolaChat AI，确保输出符合您的照护标准。",
     duration: "Week 1",
   },
   {
     title: "上线患者门户",
-    detail: "邀请患者、发布项目，并在两周内开放预约市场。",
+    detail: "邀请患者、发布项目，两周内即可开放预约。",
     duration: "Week 2",
   },
 ];
@@ -102,9 +102,9 @@ export default function Home() {
         <section className="grid gap-8 lg:grid-cols-2">
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-[#041B36]/80 p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向医生</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">委托 AI 收集信息，智能报告助您主动照护。</h2>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">委托 AI 收集信息，智能报告助您主动照护</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              SolaChat 1.0 让您可以将信息收集工作委托给 AI，同时通过智能报告系统快速识别需要关注的患者，让您能够更主动地提供照护。
+              SolaChat 1.0 让您可以将信息收集工作委托给 AI，同时通过智能报告系统快速识别需要关注的患者，助您更主动地提供照护。
             </p>
             <div className="mt-8 space-y-5">
               {psychiatristFeatures.map((feature) => (
@@ -121,9 +121,9 @@ export default function Home() {
 
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-b from-[#041B36] to-[#03142A] p-8" id="patients">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向患者</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">真实医生 + 问诊间隙的智能陪伴。</h2>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">真实医生 + 问诊间隙的智能陪伴</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              以清晰定价、灵活排班与引导式签到，让你与照护团队保持连接。
+              清晰定价、灵活排班与引导式签到，让您与照护团队保持连接。
             </p>
             <div className="mt-8 space-y-5">
               {patientHighlights.map((highlight) => (
@@ -152,9 +152,9 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">上线计划</p>
-              <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">数周落地，而非数月。</h2>
+              <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">数周落地，而非数月</h2>
               <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-                入驻团队与临床负责人并肩，配置流程、同意书与计费设置，首日即合规。
+                入驻团队与临床负责人协作，配置流程、同意书与计费设置，首日即可合规。
               </p>
               <div className="mt-8 space-y-4">
                 {workflow.map((step) => (
@@ -170,7 +170,7 @@ export default function Home() {
             </div>
             <div className="rounded-[24px] border border-[#FFFCCF]/10 bg-[#FFFCCF]/5 p-6">
               <h3 className="text-2xl font-semibold text-[#FFFCCF]">预约演示</h3>
-              <p className="mt-2 text-sm text-[#FFFCCF]/80">告诉我们诊所规模与目标，我们将在 1 个工作日内回复。</p>
+              <p className="mt-2 text-sm text-[#FFFCCF]/80">告诉我们您的诊所规模与目标，我们将在 1 个工作日内回复。</p>
               <form className="mt-6 space-y-4">
                 <div>
                   <label className="text-sm text-[#FFFCCF]/70" htmlFor="name">
@@ -238,7 +238,7 @@ export default function Home() {
                 >
                   发送申请
                 </button>
-                <p className="text-center text-xs text-[#FFFCCF]/60">关护专家会在 24 小时内安排你的演示。</p>
+                <p className="text-center text-xs text-[#FFFCCF]/60">照护专家会在 24 小时内安排您的演示。</p>
               </form>
             </div>
           </div>
@@ -246,9 +246,9 @@ export default function Home() {
 
         <section className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-r from-[#041B36] to-[#03142A] p-8 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">值得信赖的伙伴</p>
-          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与医生、合规专家和真实患者共同打造。</h2>
+          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与医生、合规专家和真实患者共同打造</h2>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-[#FFFCCF]/80">
-            无论是精品私营诊所还是多地点机构，SolaChat 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配你的工作流。
+            无论是精品私营诊所还是多地点机构，SolaChat 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配您的工作流。
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs uppercase tracking-[0.3em] text-[#FFFCCF]/60">
             <span>HIPAA + SOC 2 Type II</span>
