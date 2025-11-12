@@ -3,22 +3,22 @@ import Image from "next/image";
 
 const psychiatristFeatures = [
   {
-    title: "AI 临床副驾",
+    title: "委托信息收集",
     description:
-      "总结会话重点、提示用药考量，并依据诊断给出带有安全护栏的下一步建议。",
-    badge: "精准 AI",
+      "医生可以委托 AI 与患者对话，自动收集所需信息。例如，AI 可以与患者进行 CBT 方法进展更新对话，获取医生需要的问题答案，节省宝贵时间。",
+    badge: "AI 助手",
   },
   {
-    title: "人群健康监测",
+    title: "智能患者报告",
     description:
-      "SolaChat 持续关注情绪走向、日记与生命体征，帮助精神科医生安全照护 3× 患者。",
-    badge: "信号枢纽",
+      "生成带有推理过程的患者报告，帮助医生快速识别需要帮助的患者，并主动采取行动。报告包含详细的分析和理由，让医生能够做出明智的临床决策。",
+    badge: "主动照护",
   },
   {
-    title: "协同工作流",
+    title: "患者档案管理",
     description:
-      "共享关护计划、安全消息与自动化笔记流转，让处方医、治疗师与支持团队保持同步。",
-    badge: "协作",
+      "强大的患者档案管理工具，提供实用功能帮助医生快速生成所需的各种报告。集中管理患者信息，轻松访问历史记录和生成定制化报告。",
+    badge: "档案管理",
   },
 ];
 
@@ -26,7 +26,7 @@ const patientHighlights = [
   {
     title: "亲民问诊",
     description:
-      "透明定价最低 85 美元起，并提供灵活会员方案，让优质精神科支持触手可及。",
+      "透明定价每次 300 元，让优质医疗支持触手可及。",
   },
   {
     title: "随时在线的支持",
@@ -58,12 +58,6 @@ const workflow = [
   },
 ];
 
-const stats = [
-  { label: "每位精神科医生可管理患者数", value: "3×" },
-  { label: "记录时间节省", value: "14 小时" },
-  { label: "平均问诊费用", value: "$85" },
-];
-
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#03142A] text-[#FFFCCF]">
@@ -76,68 +70,41 @@ export default function Home() {
         aria-hidden
       />
       <main className="relative mx-auto flex max-w-6xl flex-col gap-20 px-6 pb-24 pt-12 sm:px-10">
-        <section className="relative overflow-hidden rounded-[32px] border border-[#FFFCCF]/10 bg-gradient-to-br from-[#03142A] via-[#071F41] to-[#03142A] p-8 sm:p-12">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/sola-icon.png"
-                alt="SolaChat Logo"
-                width={48}
-                height={48}
-                className="h-12 w-12 rounded-2xl object-contain"
-              />
-              <span className="text-xl font-semibold tracking-wide">SolaChat</span>
-            </div>
-            <div className="flex flex-wrap gap-3 text-sm text-[#FFFCCF]/70">
-              <span>AI 门户</span>
-              <span>临床安全</span>
-              <span>预约管理</span>
-            </div>
-          </div>
-
-          <div className="mt-10 text-center sm:text-left">
-            <p className="inline-flex items-center rounded-full border border-[#FFFCCF]/20 px-4 py-1 text-xs uppercase tracking-[0.2em] text-[#FFFCCF]/80">
-              AI 赋能 · 精神健康照护
-            </p>
-            <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-              让精神科医生在保持人情温度的同时服务更多患者。
+        <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden rounded-[32px] border border-[#FFFCCF]/10 bg-gradient-to-br from-[#03142A] via-[#071F41] to-[#03142A] p-12 sm:p-16">
+          <div className="flex flex-col items-center gap-8">
+            <Image
+              src="/sola-icon.png"
+              alt="SolaChat Logo"
+              width={120}
+              height={120}
+              className="h-32 w-32 rounded-2xl object-contain sm:h-40 sm:w-40"
+            />
+            <h1 className="text-5xl font-semibold tracking-wide text-[#FFFCCF] sm:text-6xl lg:text-7xl">
+              SolaChat
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-relaxed text-[#FFFCCF]/80">
-              SolaChat 将临床级 AI 副驾与亲民患者门户整合，提供全面监测、智能记录与真实医生团队，让循证治疗更高效、更可负担。
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="#book"
-                className="rounded-full bg-[#FFFCCF] px-8 py-3 text-center text-base font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
+                href="/patient"
+                className="rounded-full bg-[#FFFCCF] px-10 py-4 text-center text-lg font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
               >
-                预约实时演示
+                患者入口
               </Link>
               <Link
-                href="#patients"
-                className="rounded-full border border-[#FFFCCF]/40 px-8 py-3 text-center text-base font-semibold text-[#FFFCCF] transition hover:border-[#FFFCCF] hover:bg-[#FFFCCF]/5"
+                href="/psychiatrist"
+                className="rounded-full border-2 border-[#FFFCCF] bg-transparent px-10 py-4 text-center text-lg font-semibold text-[#FFFCCF] transition hover:bg-[#FFFCCF]/10"
               >
-                体验患者门户
+                医生入口
               </Link>
             </div>
-            <dl className="mt-12 grid gap-4 sm:grid-cols-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-[#FFFCCF]/10 bg-[#FFFCCF]/5 p-5 text-left">
-                  <dt className="text-xs uppercase tracking-[0.2em] text-[#FFFCCF]/70">
-                    {stat.label}
-                  </dt>
-                  <dd className="mt-3 text-3xl font-semibold text-[#FFFCCF]">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </section>
 
         <section className="grid gap-8 lg:grid-cols-2">
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-[#041B36]/80 p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向精神科医生</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">主动、合规照护的一体化控制台。</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向医生</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">委托 AI 收集信息，智能报告助您主动照护。</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              所有 AI 工具均由执业医生共创，帮助你提前预警临床风险，守护团队效率。
+              SolaChat 1.0 让您可以将信息收集工作委托给 AI，同时通过智能报告系统快速识别需要关注的患者，让您能够更主动地提供照护。
             </p>
             <div className="mt-8 space-y-5">
               {psychiatristFeatures.map((feature) => (
@@ -154,7 +121,7 @@ export default function Home() {
 
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-b from-[#041B36] to-[#03142A] p-8" id="patients">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向患者</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">真实精神科医生 + 问诊间隙的智能陪伴。</h2>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">真实医生 + 问诊间隙的智能陪伴。</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
               以清晰定价、灵活排班与引导式签到，让你与照护团队保持连接。
             </p>
@@ -279,7 +246,7 @@ export default function Home() {
 
         <section className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-r from-[#041B36] to-[#03142A] p-8 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">值得信赖的伙伴</p>
-          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与精神科医生、合规专家和真实患者共同打造。</h2>
+          <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与医生、合规专家和真实患者共同打造。</h2>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-[#FFFCCF]/80">
             无论是精品私营诊所还是多地点机构，SolaChat 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配你的工作流。
           </p>
