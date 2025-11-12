@@ -22,42 +22,6 @@ const psychiatristFeatures = [
   },
 ];
 
-const patientHighlights = [
-  {
-    title: "亲民问诊",
-    description:
-      "每次问诊 300 元，价格透明，让优质医疗服务触手可及。",
-  },
-  {
-    title: "随时在线的支持",
-    description:
-      "在问诊间隙，与 AI 助手记录睡眠、情绪和触发点，可选择性地同步给主治医生。",
-  },
-  {
-    title: "自主预约",
-    description:
-      "支持跨设备预约和改期，也可申请续方。自动提醒功能减少爽约，确保治疗计划顺利推进。",
-  },
-];
-
-const workflow = [
-  {
-    title: "连接诊所",
-    detail: "我们将对接您的 EHR 系统，导入团队模板，并配置合规设置。",
-    duration: "Day 0",
-  },
-  {
-    title: "训练副驾",
-    detail: "结合临床数据和内部规范，定制 SolaChat AI，确保输出符合您的照护标准。",
-    duration: "Week 1",
-  },
-  {
-    title: "上线患者门户",
-    detail: "邀请患者、发布项目，两周内即可开放预约。",
-    duration: "Week 2",
-  },
-];
-
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#03142A] text-[#FFFCCF]">
@@ -99,12 +63,31 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-2">
+        <section className="flex flex-col gap-8">
           <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-[#041B36]/80 p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向医生</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">委托 AI 收集信息，智能报告助您主动照护</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">心理治疗服务</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">提供在线心理医生心理治疗服务</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              SolaChat 1.0 让您可以将信息收集工作委托给 AI，同时通过智能报告系统快速识别需要关注的患者，助您更主动地提供照护。
+              SolaChat 使用自有系统为患者提供在线心理治疗服务。通过我们的平台，患者可以与专业心理医生进行远程咨询，享受便捷、高效的心理治疗服务。
+            </p>
+            <div className="mt-8 rounded-2xl border border-[#FFFCCF]/20 bg-[#FFFCCF]/10 p-6">
+              <p className="text-lg font-semibold text-[#FFFCCF]">每次 300 元</p>
+              <div className="mt-6">
+                <Link
+                  href="/patient"
+                  className="inline-flex items-center justify-center w-full rounded-full bg-[#FFFCCF] px-6 py-3 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
+                >
+                  预约咨询
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-b from-[#041B36] to-[#03142A] p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">企业客户服务</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">为医院和学校提供系统服务</h2>
+            <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
+              SolaChat 为医院和学校等机构客户提供我们的系统服务。这些机构已有自己的医生团队，我们提供专业的系统平台，帮助他们更高效地管理患者和提供服务。
             </p>
             <div className="mt-8 space-y-5">
               {psychiatristFeatures.map((feature) => (
@@ -117,129 +100,17 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="rounded-[28px] border border-[#FFFCCF]/10 bg-gradient-to-b from-[#041B36] to-[#03142A] p-8" id="patients">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">面向患者</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">真实医生 + 问诊间隙的智能陪伴</h2>
-            <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              清晰定价、灵活排班与引导式签到，让您与照护团队保持连接。
-            </p>
-            <div className="mt-8 space-y-5">
-              {patientHighlights.map((highlight) => (
-                <div key={highlight.title} className="rounded-2xl border border-[#FFFCCF]/10 bg-[#FFFCCF]/5 p-6">
-                  <h3 className="text-xl font-semibold text-[#FFFCCF]">{highlight.title}</h3>
-                  <p className="mt-2 text-sm text-[#FFFCCF]/80">{highlight.description}</p>
-                </div>
-              ))}
-            </div>
             <div className="mt-8 rounded-2xl border border-[#FFFCCF]/20 bg-[#FFFCCF]/10 p-6">
-              <p className="text-sm text-[#FFFCCF]/80">想在一周内安排问诊？</p>
-              <p className="mt-1 text-lg font-semibold text-[#FFFCCF]">2 分钟内与关护团队连线。</p>
-              <div className="mt-4 flex flex-col gap-3 text-sm font-semibold">
-                <Link href="mailto:care@solachat.com" className="text-[#FFFCCF] underline-offset-4 hover:underline">
-                  care@solachat.com
-                </Link>
-                <Link href="tel:+18885551234" className="text-[#FFFCCF] underline-offset-4 hover:underline">
-                  +1 (888) 555-1234
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-[28px] border border-[#FFFCCF]/10 bg-[#041B36]/80 p-8" id="book">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">上线计划</p>
-              <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">数周落地，而非数月</h2>
-              <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-                入驻团队与临床负责人协作，配置流程、同意书与计费设置，首日即可合规。
-              </p>
-              <div className="mt-8 space-y-4">
-                {workflow.map((step) => (
-                  <div key={step.title} className="flex gap-4 rounded-2xl border border-[#FFFCCF]/10 bg-[#03142A]/60 p-4">
-                    <div className="text-sm font-semibold text-[#FFFCCF]/70">{step.duration}</div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-[#FFFCCF]">{step.title}</h3>
-                      <p className="text-sm text-[#FFFCCF]/80">{step.detail}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[24px] border border-[#FFFCCF]/10 bg-[#FFFCCF]/5 p-6">
-              <h3 className="text-2xl font-semibold text-[#FFFCCF]">预约演示</h3>
-              <p className="mt-2 text-sm text-[#FFFCCF]/80">告诉我们您的诊所规模与目标，我们将在 1 个工作日内回复。</p>
-              <form className="mt-6 space-y-4">
-                <div>
-                  <label className="text-sm text-[#FFFCCF]/70" htmlFor="name">
-                    姓名
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="张医生"
-                    className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-[#FFFCCF]/70" htmlFor="email">
-                    工作邮箱
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@practice.com"
-                    className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-[#FFFCCF]/70" htmlFor="size">
-                    当前服务患者数
-                  </label>
-                  <select
-                    id="size"
-                    name="size"
-                    className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] focus:border-[#FFFCCF] focus:outline-none"
-                    defaultValue="250-750"
-                  >
-                    <option value="0-100" className="text-[#03142A]">
-                      0 – 100 位患者
-                    </option>
-                    <option value="100-250" className="text-[#03142A]">
-                      100 – 250 位患者
-                    </option>
-                    <option value="250-750" className="text-[#03142A]">
-                      250 – 750 位患者
-                    </option>
-                    <option value="750+" className="text-[#03142A]">
-                      750+ 位患者
-                    </option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-sm text-[#FFFCCF]/70" htmlFor="message">
-                    成功的样子是什么？
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    placeholder="扩展混合诊疗，同时保持用药安全复核..."
-                    className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF] focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="button"
-                  className="w-full rounded-full bg-[#FFFCCF] px-6 py-3 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
+              <p className="text-sm text-[#FFFCCF]/80">想要了解我们的系统服务？</p>
+              <p className="mt-1 text-lg font-semibold text-[#FFFCCF]">联系我们获取更多信息</p>
+              <div className="mt-4">
+                <Link
+                  href="mailto:88therisingsun@gmail.com"
+                  className="inline-flex items-center justify-center w-full rounded-full bg-[#FFFCCF] px-6 py-3 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
                 >
-                  发送申请
-                </button>
-                <p className="text-center text-xs text-[#FFFCCF]/60">照护专家会在 24 小时内安排您的演示。</p>
-              </form>
+                  发送邮件咨询
+                </Link>
+              </div>
             </div>
           </div>
         </section>
