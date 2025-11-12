@@ -1,5 +1,112 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+
+function ContactForm() {
+  const [contactMethod, setContactMethod] = useState("email");
+  const [contactValue, setContactValue] = useState("");
+
+  const getInputType = () => {
+    switch (contactMethod) {
+      case "phone":
+        return "tel";
+      case "email":
+        return "email";
+      case "wechat":
+        return "text";
+      default:
+        return "text";
+    }
+  };
+
+  const getPlaceholder = () => {
+    switch (contactMethod) {
+      case "phone":
+        return "请输入手机号码";
+      case "email":
+        return "请输入邮箱地址";
+      case "wechat":
+        return "请输入微信号";
+      default:
+        return "";
+    }
+  };
+
+  const getLabel = () => {
+    switch (contactMethod) {
+      case "phone":
+        return "手机号码";
+      case "email":
+        return "邮箱";
+      case "wechat":
+        return "微信号";
+      default:
+        return "";
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log({ contactMethod, contactValue });
+  };
+
+  return (
+    <div className="mt-8 rounded-2xl border border-[#FFFCCF]/20 bg-[#FFFCCF]/10 p-6">
+      <h3 className="text-2xl font-semibold text-[#FFFCCF]">咨询</h3>
+      <p className="mt-2 text-sm text-[#FFFCCF]/80">请留下您的联系方式，我们会联系您</p>
+      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <div>
+          <label className="text-sm text-[#FFFCCF]/70" htmlFor="contact-method">
+            联系方式
+          </label>
+          <select
+            id="contact-method"
+            value={contactMethod}
+            onChange={(e) => {
+              setContactMethod(e.target.value);
+              setContactValue("");
+            }}
+            className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] focus:border-[#FFFCCF] focus:outline-none"
+          >
+            <option value="phone" className="text-[#03142A]">
+              手机号码
+            </option>
+            <option value="email" className="text-[#03142A]">
+              邮箱
+            </option>
+            <option value="wechat" className="text-[#03142A]">
+              微信号
+            </option>
+          </select>
+        </div>
+        <div>
+          <label className="text-sm text-[#FFFCCF]/70" htmlFor="contact-value">
+            {getLabel()}
+          </label>
+          <input
+            id="contact-value"
+            name="contactValue"
+            type={getInputType()}
+            value={contactValue}
+            onChange={(e) => setContactValue(e.target.value)}
+            placeholder={getPlaceholder()}
+            required
+            className="mt-1 w-full rounded-2xl border border-[#FFFCCF]/20 bg-[#03142A] px-4 py-3 text-sm text-[#FFFCCF] placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF] focus:outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded-full bg-[#FFFCCF] px-6 py-3 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
+        >
+          提交
+        </button>
+      </form>
+    </div>
+  );
+}
 
 const psychiatristFeatures = [
   {
@@ -38,13 +145,13 @@ export default function Home() {
           <div className="flex flex-col items-center gap-8">
             <Image
               src="/sola-icon.png"
-              alt="SolaChat Logo"
+              alt="灵悟咨询 Logo"
               width={120}
               height={120}
               className="h-32 w-32 rounded-2xl object-contain sm:h-40 sm:w-40"
             />
             <h1 className="text-5xl font-semibold tracking-wide text-[#FFFCCF] sm:text-6xl lg:text-7xl">
-              SolaChat
+              灵悟咨询 v1.0
             </h1>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link
@@ -68,7 +175,7 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">心理治疗服务</p>
             <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">提供在线心理医生心理治疗服务</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              SolaChat 使用自有系统为患者提供在线心理治疗服务。通过我们的平台，患者可以与专业心理医生进行远程咨询，享受便捷、高效的心理治疗服务。
+              灵悟咨询 使用自有系统为患者提供在线心理治疗服务。通过我们的平台，患者可以与专业心理医生进行远程咨询，享受便捷、高效的心理治疗服务。
             </p>
             <div className="mt-8 rounded-2xl border border-[#FFFCCF]/20 bg-[#FFFCCF]/10 p-6">
               <p className="text-lg font-semibold text-[#FFFCCF]">每次 300 元</p>
@@ -87,7 +194,7 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">企业客户服务</p>
             <h2 className="mt-3 text-3xl font-semibold text-[#FFFCCF]">为医院和学校提供系统服务</h2>
             <p className="mt-4 text-sm leading-relaxed text-[#FFFCCF]/80">
-              SolaChat 为医院和学校等机构客户提供我们的系统服务。这些机构已有自己的医生团队，我们提供专业的系统平台，帮助他们更高效地管理患者和提供服务。
+              灵悟咨询 为医院和学校等机构客户提供我们的系统服务。这些机构已有自己的医生团队，我们提供专业的系统平台，帮助他们更高效地管理患者和提供服务。
             </p>
             <div className="mt-8 space-y-5">
               {psychiatristFeatures.map((feature) => (
@@ -100,18 +207,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="mt-8 rounded-2xl border border-[#FFFCCF]/20 bg-[#FFFCCF]/10 p-6">
-              <p className="text-sm text-[#FFFCCF]/80">想要了解我们的系统服务？</p>
-              <p className="mt-1 text-lg font-semibold text-[#FFFCCF]">联系我们获取更多信息</p>
-              <div className="mt-4">
-                <Link
-                  href="mailto:88therisingsun@gmail.com"
-                  className="inline-flex items-center justify-center w-full rounded-full bg-[#FFFCCF] px-6 py-3 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3]"
-                >
-                  发送邮件咨询
-                </Link>
-              </div>
-            </div>
+            <ContactForm />
           </div>
         </section>
 
@@ -119,7 +215,7 @@ export default function Home() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFFCCF]/70">值得信赖的伙伴</p>
           <h2 className="mt-4 text-3xl font-semibold text-[#FFFCCF]">与医生、合规专家和真实患者共同打造</h2>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-[#FFFCCF]/80">
-            无论是精品私营诊所还是多地点机构，SolaChat 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配您的工作流。
+            无论是精品私营诊所还是多地点机构，灵悟心愈 通过 SOC 2 控制、HIPAA 合规基础设施与基于角色的审计，适配您的工作流。
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs uppercase tracking-[0.3em] text-[#FFFCCF]/60">
             <span>HIPAA + SOC 2 Type II</span>

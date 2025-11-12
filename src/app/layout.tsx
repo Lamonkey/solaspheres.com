@@ -13,21 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolaChat 1.0 | AI 辅助信息收集与智能患者报告",
+  title: "灵悟咨询 | 在线心理治疗服务",
   description:
-    "SolaChat 1.0 让医生可以委托 AI 与患者对话收集信息（如 CBT 进展更新），并自动生成带有推理过程的患者报告，帮助医生主动识别需要帮助的患者。",
+    "灵悟咨询 使用自有系统为患者提供在线心理治疗服务。通过我们的平台，患者可以与专业心理医生进行远程咨询，享受便捷、高效的心理治疗服务。",
   metadataBase: new URL("https://solachat.com"),
   openGraph: {
-    title: "SolaChat 1.0 | AI 辅助信息收集与智能患者报告",
+    title: "灵悟咨询 | 在线心理治疗服务",
     description:
-      "委托 AI 收集患者信息，智能报告助您主动照护。让医生更高效地识别需要帮助的患者并采取行动。",
+      "灵悟咨询 提供在线心理医生心理治疗服务，每次 300 元，价格透明，让优质心理治疗服务触手可及。",
     url: "https://solachat.com",
-    siteName: "SolaChat 1.0",
+    siteName: "灵悟咨询",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SolaChat 1.0 | AI 辅助信息收集与智能患者报告",
-    description: "委托 AI 与患者对话收集信息，生成智能报告，帮助医生主动照护患者。",
+    title: "灵悟咨询 | 在线心理治疗服务",
+    description: "灵悟咨询 提供在线心理医生心理治疗服务，每次 300 元，价格透明。",
   },
 };
 
