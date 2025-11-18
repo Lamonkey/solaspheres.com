@@ -106,9 +106,9 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-[#FFFCCF] mb-4">8. 儿童隐私</h2>
+              <h2 className="text-2xl font-semibold text-[#FFFCCF] mb-4">8. 儿童与青少年隐私</h2>
               <p className="mb-4">
-                我们的服务不面向18岁以下的儿童。我们不会故意收集儿童的个人信息。如发现我们收集了儿童信息，我们将立即删除。
+                我们为未成年人提供心理健康服务，并采取额外措施保护其隐私。所有儿童和青少年账户均需监护人或授权机构提供的书面同意。我们仅收集开展治疗所需的最少信息，并为监护人提供透明的访问和删除渠道。
               </p>
             </section>
 
@@ -134,4 +134,3 @@ export default function PrivacyPage() {
     </div>
   );
 }
-
