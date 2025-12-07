@@ -1,4 +1,4 @@
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
 import { config as loadEnv } from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { existsSync } from "node:fs";
@@ -19,6 +19,18 @@ for (const file of envFileCandidates) {
   break;
 }
 
+// For prisma generate, DATABASE_URL is not required
+// Only needed for migrations and runtime operations
+// Use a dummy URL during generation if DATABASE_URL is not available
+const getDatabaseUrl = () => {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+  // During prisma generate, we don't need a real connection
+  // This dummy URL is only used for config validation
+  return "postgresql://user:password@localhost:5432/dummy";
+};
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
@@ -26,6 +38,6 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: env("DATABASE_URL"),
+    url: getDatabaseUrl(),
   },
 });

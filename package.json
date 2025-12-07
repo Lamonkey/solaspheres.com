@@ -7,7 +7,6 @@
     "build": "prisma migrate deploy && prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate",
     "migrate:deploy": "prisma migrate deploy",
     "migrate:generate": "prisma generate"
   },
