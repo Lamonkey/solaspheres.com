@@ -1,13 +1,9 @@
 "use client";
 
-import { FormEvent, KeyboardEvent, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useParticipant } from "../../providers/ParticipantProvider";
-import type {
-  Participant,
-  ParticipantContextValue,
-} from "../../providers/ParticipantProvider";
 import { persistReport } from "../reportClient";
 
 const COACH_STEPS = [
@@ -60,6 +56,118 @@ function buildInitialMessages(name: string): Message[] {
 export default function MbtiAssessmentPage() {
   const router = useRouter();
   const { participant, saveReport } = useParticipant();
+  const participantName = participant?.name ?? "";
+
+  const [messages, setMessages] = useState<Message[]>(() =>
+    buildInitialMessages(participantName),
+  );
+  const [askedIndex, setAskedIndex] = useState(0);
+  const [responses, setResponses] = useState<string[]>([]);
+  const [input, setInput] = useState("");
+  const [reportSummary, setReportSummary] = useState<string | null>(null);
+  const [hasSaved, setHasSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMessages(buildInitialMessages(participant?.name ?? ""));
+    setAskedIndex(0);
+    setResponses([]);
+    setReportSummary(null);
+    setHasSaved(false);
+    setInput("");
+  }, [participant?.name]);
+
+  const canSend = input.trim().length > 0;
+  const canGenerateReport = responses.length === COACH_STEPS.length;
+
+  const appendMessage = () => {
+    if (!canSend) return;
+
+    const trimmed = input.trim();
+    const newMessage: Message = {
+      id: `user-${Date.now()}`,
+      sender: "user",
+      text: trimmed,
+    };
+
+    setResponses((prev) => [...prev, trimmed]);
+    setMessages((prev) => {
+      const next = [...prev, newMessage];
+      if (askedIndex < COACH_STEPS.length - 1) {
+        const nextIndex = askedIndex + 1;
+        const coachMessage: Message = {
+          id: `coach-step-${nextIndex}-${Date.now()}`,
+          sender: "coach",
+          text: COACH_STEPS[nextIndex].prompt,
+        };
+        return [...next, coachMessage];
+      }
+      return next;
+    });
+
+    if (askedIndex < COACH_STEPS.length - 1) {
+      setAskedIndex((prev) => prev + 1);
+    }
+
+    setInput("");
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    appendMessage();
+  };
+
+  const handleTextareaKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      appendMessage();
+    }
+  };
+
+  const handleGenerateReport = async () => {
+    if (!participant || !canGenerateReport || isSaving) return;
+    setSubmitError(null);
+    setIsSaving(true);
+
+    try {
+      const insight = COACH_STEPS.map((step, index) => {
+        const answer = responses[index] ?? "";
+        return `${step.title}：${answer}`;
+      }).join("\n");
+
+      const summary = `MBTI 对话结论：\n${insight}`;
+      saveReport({
+        type: "mbti",
+        title: "MBTI 对话报告",
+        summary,
+        data: {
+          responses,
+          prompts: COACH_STEPS,
+        },
+      });
+
+      await persistReport({
+        type: "mbti",
+        title: "MBTI 对话报告",
+        summary,
+        data: {
+          responses,
+          prompts: COACH_STEPS,
+        },
+        participant,
+      });
+
+      setReportSummary(summary);
+      setHasSaved(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "保存报告时出现错误",
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   if (!participant) {
     return (
@@ -98,185 +206,66 @@ export default function MbtiAssessmentPage() {
             根据提示交流真实体验，全部完成后点击「生成报告」。对话记录不会上传，仅用于本地报告。
           </p>
         </header>
-        <MbtiConversation
-          key={`${participant.name}-${participant.inviter}`}
-          participant={participant}
-          saveReport={saveReport}
-        />
+
+        <section className="rounded-[32px] border border-[#FFFCCF]/10 bg-[#071F41]/70 p-6">
+          <div className="mb-4 flex items-center justify-between text-sm text-[#FFFCCF]/70">
+            <span>剩余提问：{COACH_STEPS.length - responses.length}</span>
+            <span>
+              回合 {responses.length}/{COACH_STEPS.length}
+            </span>
+          </div>
+          <div className="h-[360px] overflow-y-auto rounded-2xl bg-[#020E1F]/60 p-4">
+            <div className="flex flex-col gap-3">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${message.sender === "coach" ? "self-start bg-[#102341] text-[#FFFCCF]" : "self-end bg-[#FFFCCF] text-[#03142A]"}`}
+                >
+                  {message.text}
+                </div>
+              ))}
+            </div>
+          </div>
+          <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
+            <textarea
+              className="min-h-[100px] rounded-2xl border border-[#FFFCCF]/20 bg-transparent px-4 py-3 text-sm text-[#FFFCCF] outline-none placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF]"
+              placeholder={`输入您的回复，${participant.name}`}
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleTextareaKeyDown}
+            />
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="submit"
+                disabled={!canSend}
+                className="rounded-full bg-[#FFFCCF] px-6 py-2 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                发送
+              </button>
+              <button
+                type="button"
+                disabled={!canGenerateReport || hasSaved || isSaving}
+                onClick={handleGenerateReport}
+                className="rounded-full border border-[#FFFCCF] px-6 py-2 text-sm font-semibold text-[#FFFCCF] transition hover:bg-[#FFFCCF]/10 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {hasSaved ? "报告已保存" : isSaving ? "保存中..." : "生成报告"}
+              </button>
+            </div>
+          </form>
+          {submitError ? (
+            <p className="mt-2 text-sm text-[#ffbaba]">{submitError}</p>
+          ) : null}
+        </section>
+
+        {reportSummary ? (
+          <section className="rounded-[32px] border border-[#FFFCCF]/10 bg-[#041B36]/70 p-6">
+            <h2 className="text-2xl font-semibold">报告摘要</h2>
+            <pre className="mt-4 whitespace-pre-wrap text-sm text-[#FFFCCF]/90">
+              {reportSummary}
+            </pre>
+          </section>
+        ) : null}
       </main>
     </div>
-  );
-}
-
-type MbtiConversationProps = {
-  participant: Participant;
-  saveReport: ParticipantContextValue["saveReport"];
-};
-
-function MbtiConversation({ participant, saveReport }: MbtiConversationProps) {
-  const [messages, setMessages] = useState<Message[]>(() =>
-    buildInitialMessages(participant.name),
-  );
-  const [askedIndex, setAskedIndex] = useState(0);
-  const [responses, setResponses] = useState<string[]>([]);
-  const [input, setInput] = useState("");
-  const [reportSummary, setReportSummary] = useState<string | null>(null);
-  const [hasSaved, setHasSaved] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-
-  const canSend = input.trim().length > 0;
-  const canGenerateReport = responses.length === COACH_STEPS.length;
-
-  const appendMessage = () => {
-    if (!canSend) return;
-    const trimmed = input.trim();
-    const newMessage: Message = {
-      id: `user-${Date.now()}`,
-      sender: "user",
-      text: trimmed,
-    };
-
-    setResponses((prev) => [...prev, trimmed]);
-    setMessages((prev) => {
-      const next = [...prev, newMessage];
-      if (askedIndex < COACH_STEPS.length - 1) {
-        const nextIndex = askedIndex + 1;
-        const coachMessage: Message = {
-          id: `coach-step-${nextIndex}-${Date.now()}`,
-          sender: "coach",
-          text: COACH_STEPS[nextIndex].prompt,
-        };
-        return [...next, coachMessage];
-      }
-      return next;
-    });
-
-    if (askedIndex < COACH_STEPS.length - 1) {
-      setAskedIndex((prev) => prev + 1);
-    }
-
-    setInput("");
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    appendMessage();
-  };
-
-  const handleTextareaKeyDown = (
-    event: KeyboardEvent<HTMLTextAreaElement>,
-  ) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      appendMessage();
-    }
-  };
-
-  const handleGenerateReport = async () => {
-    if (isSaving || !canGenerateReport) return;
-    setSubmitError(null);
-    setIsSaving(true);
-
-    try {
-      const insight = COACH_STEPS.map((step, index) => {
-        const answer = responses[index] ?? "";
-        return `${step.title}：${answer}`;
-      }).join("\n");
-
-      const summary = `MBTI 对话结论：\n${insight}`;
-      saveReport({
-        type: "mbti",
-        title: "MBTI 对话报告",
-        summary,
-        data: {
-          responses,
-          prompts: COACH_STEPS,
-        },
-      });
-
-      await persistReport({
-        type: "mbti",
-        title: "MBTI 对话报告",
-        summary,
-        data: {
-          responses,
-          prompts: COACH_STEPS,
-        },
-        participant,
-      });
-
-      setReportSummary(summary);
-      setHasSaved(true);
-    } catch (error) {
-      setSubmitError(
-        error instanceof Error ? error.message : "上传数据库时出现错误",
-      );
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  return (
-    <>
-      <section className="rounded-[32px] border border-[#FFFCCF]/10 bg-[#071F41]/70 p-6">
-        <div className="mb-4 flex items-center justify-between text-sm text-[#FFFCCF]/70">
-          <span>剩余提问：{COACH_STEPS.length - responses.length}</span>
-          <span>
-            回合 {responses.length}/{COACH_STEPS.length}
-          </span>
-        </div>
-        <div className="h-[360px] overflow-y-auto rounded-2xl bg-[#020E1F]/60 p-4">
-          <div className="flex flex-col gap-3">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${message.sender === "coach" ? "self-start bg-[#102341] text-[#FFFCCF]" : "self-end bg-[#FFFCCF] text-[#03142A]"}`}
-              >
-                {message.text}
-              </div>
-            ))}
-          </div>
-        </div>
-        <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
-          <textarea
-            className="min-h-[100px] rounded-2xl border border-[#FFFCCF]/20 bg-transparent px-4 py-3 text-sm text-[#FFFCCF] outline-none placeholder:text-[#FFFCCF]/40 focus:border-[#FFFCCF]"
-            placeholder={`输入您的回复，${participant.name}`}
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleTextareaKeyDown}
-          />
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="submit"
-              disabled={!canSend}
-              className="rounded-full bg-[#FFFCCF] px-6 py-2 text-sm font-semibold text-[#03142A] transition hover:bg-[#F6F0B3] disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              发送
-            </button>
-            <button
-              type="button"
-              disabled={!canGenerateReport || hasSaved || isSaving}
-              onClick={handleGenerateReport}
-              className="rounded-full border border-[#FFFCCF] px-6 py-2 text-sm font-semibold text-[#FFFCCF] transition hover:bg-[#FFFCCF]/10 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              {hasSaved ? "报告已保存" : isSaving ? "保存中..." : "生成报告"}
-            </button>
-          </div>
-        </form>
-        {submitError ? (
-          <p className="mt-2 text-sm text-[#ffbaba]">{submitError}</p>
-        ) : null}
-      </section>
-
-      {reportSummary ? (
-        <section className="rounded-[32px] border border-[#FFFCCF]/10 bg-[#041B36]/70 p-6">
-          <h2 className="text-2xl font-semibold">报告摘要</h2>
-          <pre className="mt-4 whitespace-pre-wrap text-sm text-[#FFFCCF]/90">
-            {reportSummary}
-          </pre>
-        </section>
-      ) : null}
-    </>
   );
 }

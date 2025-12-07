@@ -215,3 +215,4 @@ ALTER TABLE "MonitoringStream" ADD CONSTRAINT "MonitoringStream_userId_fkey" FOR
 -- AddForeignKey
 ALTER TABLE "MonitoringReading" ADD CONSTRAINT "MonitoringReading_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "MonitoringStream"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
+
