@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, Suspense, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -75,7 +75,7 @@ function IntakeForm({ defaultName, defaultInviter, onSubmit }: IntakeFormProps) 
   );
 }
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const inviterFromQuery = searchParams.get("inviter") ?? "";
@@ -200,5 +200,17 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-[#03142A] text-[#FFFCCF]">
+        <p>加载中...</p>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }

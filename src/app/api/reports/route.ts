@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { ReportPayload, AssessmentType } from "@/lib/assessments";
+import { Prisma } from "@/generated/prisma/client";
 
 function isAssessmentType(value: string): value is AssessmentType {
   return value === "mbti" || value === "phq9" || value === "gad7";
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
         participantName,
         inviter,
         summary: payload.summary,
-        data: payload.data,
+        data: payload.data as Prisma.InputJsonValue,
       },
     });
 
